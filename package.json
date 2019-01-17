@@ -1,0 +1,24 @@
+{
+  "name": "expressify-sequelize",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Codeofsanju/Expressify-Sequelize.git"
+  },
+  "keywords": [
+    "npm",
+    "expressify",
+    "expressify-sequelize"
+  ],
+  "author": "Sanjeev Sharma",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Codeofsanju/Expressify-Sequelize/issues"
+  },
+  "homepage": "https://github.com/Codeofsanju/Expressify-Sequelize#readme"
+}
