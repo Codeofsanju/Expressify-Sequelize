@@ -2,7 +2,7 @@
   "name": "expressify-sequelize",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "expressify.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -20,5 +20,10 @@
   "bugs": {
     "url": "https://github.com/Codeofsanju/Expressify-Sequelize/issues"
   },
-  "homepage": "https://github.com/Codeofsanju/Expressify-Sequelize#readme"
+  "homepage": "https://github.com/Codeofsanju/Expressify-Sequelize#readme",
+  "dependencies": {
+    "pg": "^7.8.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.42.0"
+  }
 }
