@@ -1,6 +1,6 @@
 {
   "name": "expressify-sequelize",
-  "version": "0.0.1",
+  "version": "1.1.2",
   "description": "",
   "main": "expressify.js",
   "scripts": {
@@ -9,6 +9,7 @@
   "bin": {
     "expressify": "expressify.js"
   },
+  "preferGlobal": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Codeofsanju/Expressify-Sequelize.git"

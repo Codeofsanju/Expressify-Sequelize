@@ -1,42 +1,26 @@
 #!/usr/bin/env node
 const fs = require('fs');
-// const path = require('path');
-
-
-
 const inputFile = process.argv[2];
 const outPutDir = process.argv[3];
+const inFile = require(`${process.cwd()}${inputFile}`);
 
-
-// console.log('\n',process.env.PWD, '\n');
 console.log('\n',inputFile, outPutDir, '\n');
 
-
-const inFile = require(`${inputFile}`);
-console.log(inFile);
-
-const arrFile = Object.keys(inFile).map(route => `router.use('/${route.toLowerCase()}', require('./${route.toLowerCase()}'));\n\t`).join('');
+// Input check
 if(Object.keys(process.argv).length !== 4){
     return console.error('\nERROR: Please enter the following format:\n> node expressify <relative path to input file> <relative path to output file>');
 }
 
-const fileMaker = (str, fileName) => {
-    const path = process.cwd();
-    fs.writeFile(`${path}/server/api/${fileName}.js`, `${str}`, function(err) {
-        if(err) {
-            return console.log(err);
-        }
-
-        console.log(`The ${fileName} route was saved!`);
-    });
-};
+// 
+const arrFile = Object.keys(inFile).map(route => `router.use('/${route.toLowerCase()}', require('./${route.toLowerCase()}'));\n\t`).join('');
 
 const indexMaker = (file) => {
     const ret =
     `//Created using Expressify for Sequelize
+
 const router = require('express').Router();
 
-${file}
+    ${file}
 
 router.use((req, res, next) => {
     const err = new Error('API route not found!');
@@ -48,10 +32,23 @@ module.exports = router;
     return ret;
 };
 
+const fileMaker = (str, fileName) => {
+    const path = process.cwd();
+    fs.writeFile(`${path}${outPutDir}${fileName}.js`, `${str}`, function(err) {
+        if(err) {
+            return console.log(err);
+        }
+
+        console.log(`The ${fileName} route was saved!`);
+    });
+};
+
+
 
 const getPostCreator = (route) => {
     const ret =
     `//Created using Expressify for Sequalize
+
 const router = require('express').Router();
 const {${route}} = require('../db/models');
 
@@ -98,8 +95,6 @@ const routesMaker = (File) => {
 
 
 
-// module.exports = () => {
-    fileMaker(indexMaker(arrFile), 'index');
-    routesMaker(inFile);
-// };
+fileMaker(indexMaker(arrFile), 'index');
+routesMaker(inFile);
 
