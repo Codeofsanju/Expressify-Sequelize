@@ -6,12 +6,10 @@ const inFile = require(`${process.cwd()}${inputFile}`);
 
 console.log('\n',inputFile, outPutDir, '\n');
 
-// Input check
 if(Object.keys(process.argv).length !== 4){
     return console.error('\nERROR: Please enter the following format:\n> node expressify <relative path to input file> <relative path to output file>');
 }
 
-// 
 const arrFile = Object.keys(inFile).map(route => `\trouter.use('/${route.toLowerCase()}', require('./${route.toLowerCase()}'));\n`).join('');
 
 const indexMaker = (file) => {
@@ -124,8 +122,6 @@ module.exports = router;`;
 const routesMaker = (File) => {
     Object.keys(File).map(route => fileMaker(getPostCreator(route), `${route}`));
 };
-
-
 
 fileMaker(indexMaker(arrFile), 'index');
 routesMaker(inFile);
