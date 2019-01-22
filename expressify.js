@@ -12,7 +12,7 @@ if(Object.keys(process.argv).length !== 4){
 }
 
 // 
-const arrFile = Object.keys(inFile).map(route => `router.use('/${route.toLowerCase()}', require('./${route.toLowerCase()}'));\n\t`).join('');
+const arrFile = Object.keys(inFile).map(route => `\trouter.use('/${route.toLowerCase()}', require('./${route.toLowerCase()}'));\n`).join('');
 
 const indexMaker = (file) => {
     const ret =
@@ -20,8 +20,7 @@ const indexMaker = (file) => {
 
 const router = require('express').Router();
 
-    ${file}
-
+${file}
 router.use((req, res, next) => {
     const err = new Error('API route not found!');
     err.status = 404;
@@ -63,18 +62,6 @@ router.get('/', async function(req, res, next){
     }
 });
 
-router.get('/:id', async function(req, res, next){
-  try {
-      const response = await ${route}.findOne({
-      where: {id: req.params.id},
-      include: [{all: true}]
-  });
-  res.send(response);
-  } catch(error) {
-      next(error);
-  }
-});
-
 router.post('/', async function(req, res, next){
     try {
         const response = await ${route}.create(req.body);
@@ -84,6 +71,51 @@ router.post('/', async function(req, res, next){
         next(error);
     }
 });
+
+router.get('/:id', async function(req, res, next){
+    try {
+        const response = await ${route}.findOne({
+        where: {id: req.params.id},
+        include: [{all: true}]
+    });
+    res.send(response);
+    } catch(error) {
+        next(error);
+    }
+});
+
+router.delete('/:id', async function(req, res, next){
+    try {
+        const response = await ${route}.findById(req.params.id);
+        !response && res.sendStatus(404);
+        if(!response){
+            res.sendStatus(404);
+        }
+        else {
+            response.destroy();
+            res.send(response);
+        }
+    } catch(error) {
+        next(error);
+    }
+});
+
+router.put('/:id', async function(req, res, next){
+    try {
+        console.log(req.body);
+        const studentToUpdated = await ${route}.findOne({
+            where: {
+                id: req.params.id
+            },
+            include: [{all:true}]
+        })
+        studentToUpdated.update(req.body);
+        res.send(studentToUpdated);
+    } catch (error) {
+        next(error);
+    }
+});
+
 
 module.exports = router;`;
     return ret;
